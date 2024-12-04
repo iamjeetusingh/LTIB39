@@ -1,0 +1,222 @@
+/
+	- /bin		= stores all regular user command binaries
+	- /sbin		= stores all root user command binaries
+	- /home		= stores all regular users home directory
+					-/home/jeetu
+					-/home/hulk
+	- /root		= home directory of ROOT user
+	- /boot	 	= contains boot files required at booting time.
+	- /dev		= device related files
+					- /dev/sr0
+					- /dev/sda		//sda = SCSI Disk A
+					- /dev/hda		//hda = Hard Disk A
+	- /mnt		= contains all the mount points
+					- /mnt/mydvd01
+	- /etc		= contains all the configuration files in it.
+	- /lib or /libx64	= library files for developers
+	- /proc		= contains all the running processes in it.
+	- /var		= variable length file, stores all LOGS in it.
+	- /usr		= contains all user installed applications
+	- /tmp		= contains all temporary files in it.
+	
+	
+Task:
+---------------------------------------------------------------
+- find about:
+	- touch cmd
+	- cat
+	- vim
+	- nano
+	- gedit
+	- cp
+	- mv
+	- mkdir
+	- rmdir
+	- rm
+	- cd 
+	- ls 
+	- ls -a
+	- ls -l
+	- ls -ali
+	- man
+	- pinfo
+	- whoami
+	- ifconfig
+	- ip address
+	
+	
+File permissions:
+-------------------
+- read		- r	- 4
+- write		- w - 2
+- execute	- x - 1
+--------------------
+Total			- 7
+--------------------
+
+
+Types of files in linux:
+	1. -	-> file -> text, pdf, mp3, mp4, xl, docx....
+	2. d	-> directory
+	3. b	-> block file
+	4. c	-> character file
+	5. l	-> symbolic link files
+	6. p	-> named pipe file
+	7. s	-> socket file
+	
+Note: almost all files are present in /dev
+	# ls -l /dev
+	
+Create a new file with the name "permissions.txt" & give below permissions
+	owner -> rw
+	group -> r 
+	other -> no permissions
+	
+symbolic/alphabetical method:
+------------------------------
+owner	-> u
+group	-> g
+other 	-> o
+-------------
+all		-> a
+-------------
+
+# chmod     <ugoa><+-=><rwx>      permissions.txt
+
+
+User Mgmt:
+-------------
+- create	-> useradd / adduser
+- modify	-> usermod
+- delete	-> userdel
+
+when a user is created, it entry is created in:
+	1. /etc/passwd
+	2. /etc/shadow
+	3. /etc/group
+	4. /etc/gshadow
+	5. /home
+	6. /var/spool/mail
+	
+/etc/passwd file
+--------------------
+- this file contains user's information in 7 columns
+- columns of passwd:
+	1. login name
+	2. ref. password -> /etc/shadow
+	3. user ID
+	4. group ID
+	5. comment / description / full name / GESCOS  -> chfn/usermod
+	6. user's default home directory
+	7. user's default shell -> chsh / usermod
+	
+/etc/shadow file
+-------------------
+- this file contains user's password details in 9 columns
+- columns of shadow file:
+	1. login name
+	2. true encrypted password
+		- user text
+		- hashing algo -> SHA512, MD5
+		- salt text
+	3. last password change since 1st Jan 1970.
+	4. minimum age of the password -> 0
+	5. maximum age of the password -> 99999 ~> 273Yrs
+	6. number of warning days --> 7
+	7. inactive days 
+	8. account expiry 
+	9. unused till date
+	
+	
+Task
+-----
+Create a user with the following values:
+	1. login/User name: steve
+	2. comment : Captian America
+	3. default shell: /bin/sh
+	4. user ID: 5000
+Note: NO USE OF USERMOD command
+
+
+to delete a user:
+	# userdel -r steve
+	
+ACL
+-----
+- Access Control List
+- commands:
+	1. getfacl - list the permissions of a file/directory
+	2. setfacl - sets the permissions for a file/directory
+		ACL for user: 
+			# setfacl  -m  u:<username>:rwx  file/directory
+		
+		ACL for group: 
+			# setfacl  -m  g:<groupname>:rwx  file/directory
+		
+		to remove all ACL from a file/directory
+			# setfacl  -b  file/directory
+			
+Special Permissions:
+---------------------
+	1. SUID
+	2. SGID
+	3. Sticky bit
+	
+Package management:
+--------------------
+in windows -> softwares
+in linux   -> packages
+
+we have package managers to 
+	- install
+	- update/upgrade
+	- query/information
+	- remove/uninstall
+	
+list of package managers:
+	- RPM (Redhat Package Manager)
+		- Redhat/CentOS 4,5,6,7,8,9
+	- YUM (Yellowdog Update Manager/Yellowdog Updater Modifier)
+		- Redhat/CentOS 4,5,6,7,8,9
+	- DNF (Danfied Package Manager)
+		- Redhat/CentOS 8,9
+	- APT (Advanced Packaging Tool)
+		- Ubuntu, Kali, Backtrack.
+	- DEB (Debian Package Manager)
+		- Ubuntu, Kali, Backtrack.
+		....
+		
+Naming convention of a package:
+	# name-version-release-architecture.rpm
+		rpm - extension
+		architecture
+			1. i686		--> 32bit
+			2. x86_64	--> 64bit
+			3. noarch	--> no architecture (for both 32 & 64 bit arch)
+			
+from where to download the packages?
+	- offline
+		- already downloaded packages
+		- ISO DVD
+	- internet
+		- Redhat		--> Redhat Satellite server (Paid)
+		- CentOS		--> Mirror servers (free)
+		- Ubuntu		--> Ubuntu Repo
+		
+RPM:
+-----
+	- install
+		# rpm   -ivh    full-package-name.rpm
+			i = install
+			v = verbose
+			h = hashing
+	- update/upgrade
+		# rpm   -Uvh    new-full-package-name.rpm
+			U = update
+			v = verbose
+			h = hashing
+	- query/information
+		# rpm   -q  <package-name>		// q = query
+		# rpm   -qa
+	- remove/uninstall
+		# rpm   -e  	//e = erase
