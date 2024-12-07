@@ -1,0 +1,392 @@
+/
+	- /bin		= stores all regular user command binaries
+	- /sbin		= stores all root user command binaries
+	- /home		= stores all regular users home directory
+					-/home/jeetu
+					-/home/hulk
+	- /root		= home directory of ROOT user
+	- /boot	 	= contains boot files required at booting time.
+	- /dev		= device related files
+					- /dev/sr0
+					- /dev/sda		//sda = SCSI Disk A
+					- /dev/hda		//hda = Hard Disk A
+	- /mnt		= contains all the mount points
+					- /mnt/mydvd01
+	- /etc		= contains all the configuration files in it.
+	- /lib or /libx64	= library files for developers
+	- /proc		= contains all the running processes in it.
+	- /var		= variable length file, stores all LOGS in it.
+	- /usr		= contains all user installed applications
+	- /tmp		= contains all temporary files in it.
+	
+	
+Task:
+---------------------------------------------------------------
+- find about:
+	- touch cmd
+	- cat
+	- vim
+	- nano
+	- gedit
+	- cp
+	- mv
+	- mkdir
+	- rmdir
+	- rm
+	- cd 
+	- ls 
+	- ls -a
+	- ls -l
+	- ls -ali
+	- man
+	- pinfo
+	- whoami
+	- ifconfig
+	- ip address
+	
+	
+File permissions:
+-------------------
+- read		- r	- 4
+- write		- w - 2
+- execute	- x - 1
+--------------------
+Total			- 7
+--------------------
+
+
+Types of files in linux:
+	1. -	-> file -> text, pdf, mp3, mp4, xl, docx....
+	2. d	-> directory
+	3. b	-> block file
+	4. c	-> character file
+	5. l	-> symbolic link files
+	6. p	-> named pipe file
+	7. s	-> socket file
+	
+Note: almost all files are present in /dev
+	# ls -l /dev
+	
+Create a new file with the name "permissions.txt" & give below permissions
+	owner -> rw
+	group -> r 
+	other -> no permissions
+	
+symbolic/alphabetical method:
+------------------------------
+owner	-> u
+group	-> g
+other 	-> o
+-------------
+all		-> a
+-------------
+
+# chmod     <ugoa><+-=><rwx>      permissions.txt
+
+
+User Mgmt:
+-------------
+- create	-> useradd / adduser
+- modify	-> usermod
+- delete	-> userdel
+
+when a user is created, it entry is created in:
+	1. /etc/passwd
+	2. /etc/shadow
+	3. /etc/group
+	4. /etc/gshadow
+	5. /home
+	6. /var/spool/mail
+	
+/etc/passwd file
+--------------------
+- this file contains user's information in 7 columns
+- columns of passwd:
+	1. login name
+	2. ref. password -> /etc/shadow
+	3. user ID
+	4. group ID
+	5. comment / description / full name / GESCOS  -> chfn/usermod
+	6. user's default home directory
+	7. user's default shell -> chsh / usermod
+	
+/etc/shadow file
+-------------------
+- this file contains user's password details in 9 columns
+- columns of shadow file:
+	1. login name
+	2. true encrypted password
+		- user text
+		- hashing algo -> SHA512, MD5
+		- salt text
+	3. last password change since 1st Jan 1970.
+	4. minimum age of the password -> 0
+	5. maximum age of the password -> 99999 ~> 273Yrs
+	6. number of warning days --> 7
+	7. inactive days 
+	8. account expiry 
+	9. unused till date
+	
+	
+Task
+-----
+Create a user with the following values:
+	1. login/User name: steve
+	2. comment : Captian America
+	3. default shell: /bin/sh
+	4. user ID: 5000
+Note: NO USE OF USERMOD command
+
+
+to delete a user:
+	# userdel -r steve
+	
+ACL
+-----
+- Access Control List
+- commands:
+	1. getfacl - list the permissions of a file/directory
+	2. setfacl - sets the permissions for a file/directory
+		ACL for user: 
+			# setfacl  -m  u:<username>:rwx  file/directory
+		
+		ACL for group: 
+			# setfacl  -m  g:<groupname>:rwx  file/directory
+		
+		to remove all ACL from a file/directory
+			# setfacl  -b  file/directory
+			
+Special Permissions:
+---------------------
+	1. SUID
+	2. SGID
+	3. Sticky bit
+	
+Package management:
+--------------------
+in windows -> softwares
+in linux   -> packages
+
+we have package managers to 
+	- install
+	- update/upgrade
+	- query/information
+	- remove/uninstall
+	
+list of package managers:
+	- RPM (Redhat Package Manager)
+		- Redhat/CentOS 4,5,6,7,8,9
+	- YUM (Yellowdog Update Manager/Yellowdog Updater Modifier)
+		- Redhat/CentOS 4,5,6,7,8,9
+	- DNF (Danfied Package Manager)
+		- Redhat/CentOS 8,9
+	- APT (Advanced Packaging Tool)
+		- Ubuntu, Kali, Backtrack.
+	- DEB (Debian Package Manager)
+		- Ubuntu, Kali, Backtrack.
+		....
+		
+Naming convention of a package:
+	# name-version-release-architecture.rpm
+		rpm - extension
+		architecture
+			1. i686		--> 32bit
+			2. x86_64	--> 64bit
+			3. noarch	--> no architecture (for both 32 & 64 bit arch)
+			
+from where to download the packages?
+	- offline
+		- already downloaded packages
+		- ISO DVD
+	- internet
+		- Redhat		--> Redhat Satellite server (Paid)
+		- CentOS		--> Mirror servers (free)
+		- Ubuntu		--> Ubuntu Repo
+		
+RPM:
+-----
+	- install
+		# rpm   -ivh    full-package-name.rpm
+			i = install
+			v = verbose
+			h = hashing
+	- update/upgrade
+		# rpm   -Uvh    new-full-package-name.rpm
+			U = update
+			v = verbose
+			h = hashing
+	- query/information
+		# rpm   -q  <package-name>		// q = query
+		# rpm   -qa
+	- remove/uninstall
+		# rpm   -e  	//e = erase
+		
+YUM
+-------
+	- install
+		# yum  install  <package-name>  -y
+		# apt  install  <package-name>  -y
+	- update/upgrade
+		# yum  update  <package-name>  -y
+	- query/information
+		# yum  info <package-name> 
+	- remove/uninstall
+		# yum  remove  <package-name>  -y
+		
+Sudo users:
+-------------
+1. give ROOT equivalent permissions to superman user.
+2. give user NETWORKING/STORAGE/SERVICES permissions
+
+Task:
+--------
+Create a group called ltimindtree. 
+Create a user with your lastname (or any name of your choice) and add it the the ltimindtree group.
+Give the following admin permissions to this ltimindtree group:
+	- iptables
+	- fdisk
+	- useradd
+	- usermod
+	- ping
+	- yum
+and verify.
+
+LVM
+------
+- logical volume manager
+- steps to create am LVM
+	- add physical disks
+	- create partitions from this physical disks using fdisk
+	- create physical volume (pv)
+	- create volume group (vg)
+	- create logical volume (lv)
+	- create a mount point for the LVM 
+	- create a file system for the LVM
+	- mount the LVM partition
+		1. temporary
+		2. permanent
+	- verify the mounted partition
+	
+GPT
+- GUID Partition Table
+	GUID = Globally Unique IDentifier
+	
+/etc/fstab file details
+	1. what-to-mount			--> /dev/myvg/mylv
+	2. where-to-mount			--> /lvm
+	3. file system				--> xfs
+	4. options					--> defaults
+	5. backup operation			--> 0
+	6. file system error check	--> 0
+	
+Task
+--------
+1. Create an LVM by attaching 2 SCSI HDD, each of 5GB in size and mount it on "/demoLVM" with EXT4 file system. Also, create a group called LTIB391 with your username as a member of this group and give full access to this group on /demoLVM directory.
+
+2. delete this LVM and remvoe this disk and verify.
+
+RAID:
+-----
+- Redundant Array of Independent Disks
+- we merge disks together to store data in multiple disks
+- Types of RAIDs
+	- RAID 0	- Stripes
+	- RAID 1	- Mirroring
+	- RAID 10	- Mirroring with stripe
+	- RAID 01	- stripe with mirroring
+	- RAID 3
+	- RAID 4
+	- RAID 5	- with single parity disk
+	- RAID 6	- with multiple parity disks
+	
+Service Mgmt:
+----------------------
+	Action -> start, stop, restart, enable, disable, is-active, 
+	Name   -> network, NetworkManager, sshd, httpd, vsftpd, ntpd, squid...
+				d = daemon (background service)
+				
+command to manage a service
+------------------------------
+[old]
+# service	 <service-name>  <action>
+
+[new]
+# systemctl  <action>  <service-name>
+
+
+to find a file or directory
+	1. find
+	2. locate
+	
+Server Configuration:
+-----------------------
+	- NTP server
+	- NFS server
+	- FTP server
+	- Samba server
+	- Apache web server
+	- Squid proxy server
+	- Bind (DNS) server
+	- Linux Mail Exchange server (Postfix, Dovecot, Telnet server)
+
+Pre-req for all the servers:
+-----------------------------
+- Package name		: 
+- Config file(s)	: 
+- Port number		: 
+- Service name		: 
+
+
+
+NTP server configuration:
+---------------------------
+	- Package name		: ntp
+	- Config file(s)	: /etc/ntp.conf
+	- Port number		: 123/tcp
+	- Service name		: ntpd
+
+Apache web server
+---------------------------
+- its a web server
+- used for hosting websites
+- types of sites that can be hosted:
+	1. internal website
+	2. public website
+
+Pre-req for Apache webserver:
+-----------------------------
+- Package name		: httpd (CentOS/RHEL), Apache2 (Ubuntu)
+- Config file(s)	: /etc/httpd/conf/httpd.conf
+- Port number		: 80, 443
+- Service name		: httpd, apache2
+
+Task:
+--------
+Create a new website with the name "ltimindtree.com" and host it on apache web server.
+
+FTP server:
+------------
+- Package name		: ftp (CLI), vsftpd
+- Config file(s)	: /etc/vsftpd/vsftpd.conf
+- Port number		: 21
+- Service name		: vsftpd
+
+
+SELinux
+	- Security Enhanced Linux
+	- modes of SELinux
+		1. Enforcing
+		2. Permissive
+		3. Disabled
+	- commands:
+		1. getenforce
+		2. setenforce
+	- file:
+		- /etc/selinux/config
+		
+NFS Server:
+--------------
+- Package name		: nfs-utils, rpcbind
+- Config file(s)	: /etc/exports
+- Port number		: 2049/tcp
+- Service name		: nfs-server, rpcbind
