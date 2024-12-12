@@ -390,3 +390,73 @@ NFS Server:
 - Config file(s)	: /etc/exports
 - Port number		: 2049/tcp
 - Service name		: nfs-server, rpcbind
+
+Steps to follow:
+--------------------
+ON SERVER & CLIENT:
+	- install the OS (in GUI)
+	- keep both VMs in same network
+	- set the hostname
+		server -> server.training.in
+		client -> client.training.in
+	- set the ip address
+		server -> server.training.in -> 192.168.10.10, 255.255.255.0
+		client -> client.training.in -> 192.168.10.11, 255.255.255.0
+	- disable FIREWALL
+	- disable SELinux
+	- Ping both server and client
+	- reboot both machines
+then start attempting scenario questions.
+
+
+
+Task:
+--------
+1. Create a folder /MyNFS on server machine with few files within it and access it on client machine using temporary on “client machine” only using READ-ONLY mode.
+
+2. Verify if the required packages are installed to work with FTP, install if it’s not installed. Use the following banner line while login in “Welcome to LTI Batch 39.1 - CBE”. Allow only your user with your last name to access the FTP server and perform upload and download of any file from FTP server.
+
+3.	Create a static website and access it using URL www.ltimindtree.com. Use below HTML page for your reference.
+	<html>
+	<body bgcolor='pink'>
+	<h1 align="center">Hello Batch 37.1</h1>
+	<marquee>display your name</marquee>
+	</body>
+	</html>
+
+Samba server
+--------------
+- Package name		: samba*  cifs
+- Config file(s)	: /etc/samba/smb.conf
+- Port number		: 139, 445
+- Service name		: smb
+
+On linux server:
+	- install the packages
+		# rpm -qa | grep samba
+		# rpm -qa | grep cifs
+	- create a group that can access samba services.
+	- create few users within that group.
+	- provide passwords to all the users.
+	- create a samba shared folder that will be accessed on client.
+	- and give the appropiate permissions.
+	- edit the configuration file
+	- provide samba users with the samba password
+	- 
+
+Squid proxy server:
+------------------------------------------
+	- Package name		: squid
+	- Config file(s)	: /etc/squid/squid.conf
+	- Port number		: 3128
+	- Service name		: squid
+
+
+Linux BIND / DNS Server:
+------------------
+	- Package name		: bind, bind-utils
+	- Config file(s)	: /etc/named.conf (present after installation)
+						  /var/named/forward.domain.com (manually)
+						  /var/named/reverse.domain.com (manually)
+	- Port number		: 53/tcp, 53/udp
+	- Service name		: named
